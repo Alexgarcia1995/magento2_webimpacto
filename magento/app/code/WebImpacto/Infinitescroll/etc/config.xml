@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <webimpacto_infinitescroll>
+            <general>
+                <enabled>1</enabled>
+                <content>.column.main</content>
+                <items>.product-items</items>
+                <loading_text><![CDATA[<em>Loading products...</em>]]></loading_text>
+                <load_more_text_prev>Load previous items</load_more_text_prev>
+                <hide_toolbar>1</hide_toolbar>
+                <toolbar_selector>.toolbar-products</toolbar_selector>
+            </general>
+        </webimpacto_infinitescroll>
+    </default>
+</config>

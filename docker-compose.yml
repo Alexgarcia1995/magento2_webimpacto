@@ -1,0 +1,72 @@
+version: '3'
+services:
+   web:
+        image: webdevops/php-apache:8.1
+        container_name: webimpacto_web
+        deploy:
+          resources:
+               reservations:
+                    memory: 2048M
+        restart: always
+        environment:
+         - WEB_ALIAS_DOMAIN=local.magento.com
+         - WEB_DOCUMENT_ROOT=/app/pub
+         - PHP_DATE_TIMEZONE=EST
+         - PHP_DISPLAY_ERRORS=1
+         - PHP_MEMORY_LIMIT=4096M
+         - PHP_POST_MAX_SIZE=500M
+         - PHP_UPLOAD_MAX_FILESIZE=1024M
+         - PHP_OPCACHE_MEMORY_CONSUMPTION=2048M
+        volumes:
+         - ./magento:/app:cached
+        ports:
+         - "80:80"
+         - "443:443"
+         - "32823:22"
+        links:
+         - mysql
+   mysql:
+        image: mysql:8.0
+        container_name: webimpacto_mysql
+        restart: always
+        ports:
+         - "3306:3306"
+        environment:
+         - MYSQL_ROOT_PASSWORD=root
+         - MYSQL_DATABASE=magento2
+         - MSYQL_USER=magento2
+         - MSYQL_PASSWORD=magento2
+        volumes:
+         - db-data:/var/lib/mysql
+   elasticsearch:
+        container_name: webimpacto_es-container
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.16.0
+        deploy:
+          resources:
+               limits:
+                    memory: 512M
+        environment:
+          - xpack.security.enabled=false
+          - "discovery.type=single-node"
+        ports:
+         - 9200:9200
+   phpmyadmin:
+        container_name: webimpacto_phpmyadmin
+        restart: always
+        image: phpmyadmin/phpmyadmin:latest
+        environment:
+         - MYSQL_ROOT_PASSWORD=root
+         - MSYQL_USER=magento2
+         - MSYQL_PASSWORD=magento2
+         - PMA_USER=root
+         - PMA_PASSWORD=root
+         - UPLOAD_LIMIT=300M
+        ports:
+         - "8080:80"
+        links:
+         - mysql:db
+        depends_on:
+         - mysql
+volumes:
+   db-data:
+        external: false        

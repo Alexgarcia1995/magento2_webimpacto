@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="webimpacto" translate="label" sortOrder="90000">
+            <label>WebImpacto</label>
+        </tab>
+        <section id="webimpacto_infinitescroll" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Infinitescroll</label>
+            <tab>webimpacto</tab>
+            <resource>WebImpacto_Infinitescroll::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="content" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Content</label>
+                    <comment>Selector for the element that surrounds the items you will be loading more of.</comment>
+                </field>
+                <field id="items" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Items</label>
+                    <comment>Selector for all items you'll retrieve.</comment>
+                </field>
+                <field id="loading_text" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Loading Text</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

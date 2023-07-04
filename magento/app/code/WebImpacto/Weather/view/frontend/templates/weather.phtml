@@ -1,0 +1,48 @@
+<?php /** @var $block \WebImpacto\Weather\Block\Weather */ ?>
+
+<div id="weather-container" style="display:none";>
+    <p><?= __($block->getConfigValue("top_text")); ?></p>
+    <div id="weather-info">
+        <span class="weather-data"><img class="weather-icon" src="<?= $block->getViewFileUrl('WebImpacto_Weather::images/sun.svg') ?>" alt="Temperature" />:<span id="temp"></span>ºC</span>
+        <span class="weather-data"><img class="weather-icon" src="<?= $block->getViewFileUrl('WebImpacto_Weather::images/humidity.svg') ?>" alt="Humidity" />:<span id="humidity"></span></span>
+        <span class="weather-data"><img class="weather-icon" src="<?= $block->getViewFileUrl('WebImpacto_Weather::images/wind.svg') ?>" alt ="Wind Speed" />:<span id="windspeed"></span></span>
+    </div>
+</div>
+<script>
+const successCallback = (position) => {
+     fetch('https://api.open-meteo.com/v1/forecast?latitude='+position.coords.latitude+'&longitude='+position.coords.longitude+'&hourly=relativehumidity_2m&current_weather=true')
+    .then(response => response.json())
+    .then(data => setTemplateData(data));
+};
+
+const errorCallback = (error) => {
+  document.getElementById("weather-info").innerHTML = '<?= __($block->getConfigValue("error_text")); ?>'
+  showWeatherContainer();
+};
+
+function getCurrentHumidity(data) {
+    let currentTimezone = data.current_weather.time;
+
+    if (currentTimezone) {
+        let index = data.hourly.time.indexOf(currentTimezone);
+        return data.hourly.relativehumidity_2m[index];
+    }
+
+    return "";
+}
+
+function showWeatherContainer() {
+    document.getElementById("weather-container").removeAttribute('style');
+}
+
+function setTemplateData(data) {
+    let humidity = getCurrentHumidity(data);
+    document.getElementById("temp").innerHTML = data.current_weather.temperature;
+    document.getElementById("humidity").innerHTML = humidity;
+    document.getElementById("windspeed").innerHTML = data.current_weather.windspeed;
+    showWeatherContainer();
+}
+
+navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+
+</script>

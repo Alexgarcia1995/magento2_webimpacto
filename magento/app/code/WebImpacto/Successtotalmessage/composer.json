@@ -1,0 +1,12 @@
+{
+  "name": "webimpacto/successtotalmessage",
+  "description": "Magento2 Module to show how much money the user has used on the store in Success Page",
+  "type": "magento2-module",
+  "version": "0.1.0",
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "WebImpacto\\Successtotalmessage\\": ""
+    }
+  }
+}

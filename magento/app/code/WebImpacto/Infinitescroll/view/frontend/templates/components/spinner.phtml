@@ -1,0 +1,3 @@
+<?php /** @var $block \WebImpacto\Infinitescroll\Block\Init */ ?>
+<?php $imageSrc = $block->getViewFileUrl('WebImpacto_Infinitescroll::images/spinner.svg');?>
+<div class="infinte-scroll-loader" style="text-align: center;"><img style="display:inline" src="<?= $imageSrc ?>"/><span><?= $block->escapeJsQuote(__($block->getConfigValue('loading_text')))?></span></div>
