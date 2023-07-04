@@ -1,0 +1,5 @@
+magento/generated
+magento/pub/static
+magento/vendor
+magento/var
+!magento/var/.htaccess

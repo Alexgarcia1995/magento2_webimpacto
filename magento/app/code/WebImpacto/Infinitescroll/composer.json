@@ -1,0 +1,12 @@
+{
+  "name": "webimpacto/magento2-infinitescroll",
+  "description": "Magento2 InfiniteScroll module to load the next catalog page or results when scrolling down a page.",
+  "type": "magento2-module",
+  "version": "0.1.0",
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "WebImpacto\\Infinitescroll\\": ""
+    }
+  }
+}

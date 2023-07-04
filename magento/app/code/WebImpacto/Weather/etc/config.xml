@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <webimpacto_weather>
+            <general>
+                <enabled>1</enabled>
+                <top_text>Current Location Weather Info</top_text>
+                <error_message>You need to grant access to your location or your browser is not compatible with it</error_message>
+            </general>
+        </webimpacto_weather>
+    </default>
+</config>

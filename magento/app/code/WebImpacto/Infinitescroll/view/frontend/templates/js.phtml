@@ -1,0 +1,122 @@
+<?= $block->getChildHtml("infinite_scroll_loader"); ?>
+
+<script type="text/javascript">
+require(['jquery'], function($) {
+
+    $('.field.limiter').hide();
+
+    let ScrollDebounce = true;
+    let lastPageNum = parseInt('<?= $block->getLastPageNum() ?>');
+    let configMainSelector = '<?= $block->getConfigValue('content') ?>'
+    let configItemsSelector = '<?= $block->getConfigValue('items') ?>'
+
+    let arrayHistory = [];
+    let minUrlHistory = getCurrentPage();
+    arrayHistory[0] = 0;
+
+    let limitPage = "";
+
+    toggleLoader();
+
+    $(window).bind('scroll', function() {
+        limitPage = $(configMainSelector).offset().top + $(configMainSelector).outerHeight() - window.innerHeight;
+        if (ScrollDebounce) {
+            if($(window).scrollTop() >= limitPage) {
+                loadNextPage(limitPage);
+            };
+        }
+        setScrollHistory($(window).scrollTop());
+
+    });
+
+    async function loadNextPage(limitPage) {
+        let ajaxUrl = prepareURLToAjax(getCurrentPage() + 1);
+
+        ScrollDebounce = false;
+
+        if (getCurrentPage() === lastPageNum){
+            return;
+        }
+
+        toggleLoader();
+
+        arrayHistory[getCurrentPage()] = limitPage;
+
+        await fetch(ajaxUrl).then(function (response) {
+            return response.text();
+        }).then(function (html) {
+            document.querySelector(configItemsSelector).appendChild(prepareHTMLappend(html));
+            $(configItemsSelector).trigger('contentUpdated');
+            history.replaceState( {} , document.title, ajaxUrl);
+            ScrollDebounce = true;
+            console.log(arrayHistory);
+            toggleLoader();
+
+        }).catch(function (err) {
+            console.warn('Something went wrong.', err);
+        });
+    }
+
+    function prepareHTMLappend(html) {
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(html, "text/html");
+        let paragraphs = doc.querySelectorAll('.product-items .item.product.product-item');
+        let htmlAppend = document.createDocumentFragment();
+
+        paragraphs.forEach((paragraph) => {
+            htmlAppend.appendChild(paragraph)
+        });
+
+        return htmlAppend;
+    }
+
+    function prepareURLToAjax($page) {
+        let url = new URL(window.location.href);
+        let pagination = url.searchParams.get('p');
+
+        if(!pagination) {
+            url.searchParams.append('p', $page);
+        } else {
+            url.searchParams.delete('p');
+            url.searchParams.append('p', $page)
+        }
+
+        return url;
+    }
+
+    function getCurrentPage() {
+        let url = new URL(window.location.href);
+        let currentPage = parseInt(url.searchParams.get('p'));
+
+        if(!currentPage) {
+            currentPage = 1;
+        }
+
+        return currentPage;
+    }
+
+    function toggleLoader() 
+    {
+        $('.infinte-scroll-loader').toggle();
+    }
+
+    function setScrollHistory(windowScroll)
+    {
+        if (arrayHistory.length <= 1) {
+            return;
+        }
+
+        let index = arrayHistory.findLastIndex((element) => windowScroll >= element);
+
+        let urlScroll = prepareURLToAjax(index + 1);
+        
+        if (minUrlHistory > (index + 1)) {
+            urlScroll = prepareURLToAjax(minUrlHistory)
+        }
+
+        if (window.location.href !== urlScroll.href) {
+            history.replaceState( {} , document.title, urlScroll);
+        }
+    }
+});
+</script>

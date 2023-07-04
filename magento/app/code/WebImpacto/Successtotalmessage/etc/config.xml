@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <webimpacto_successtotalmessage>
+            <general>
+                <enabled>1</enabled>
+                <success_text>You have spent a total of %1 in our store</success_text>
+            </general>
+            <email>
+                <email_enabled>1</email_enabled>
+            </email>
+        </webimpacto_successtotalmessage>
+    </default>
+</config>

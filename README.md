@@ -1,5 +1,12 @@
 # Magento 2 Webimpacto
-Technical test for Webimpacto. This test creates some Magento modules in order to show my technical skills
+Technical test for Webimpacto. This test creates a Magento environment with docker and the technical modules asked on the task.
+
+In order to install and make it work properly, you need to follow this steps:
+
+1. Download the repository and run `docker compose up -d` in order to install all the docker environment.
+2. Access to phpmyadmin page(http://localhost:8080/) and import the database file inside mysql-dump. Also important, check if "magento2" user is created, if is not, create it with password "magento2" and all the privileges.
+3. Access to "webimpacto_es-container" and run `composer install` in order to generate vendor elements.
+4. Run http://localhost:80/ and check if everything works properly in Magento.
 
 Each module is added in app/code/WebImpacto.
 
