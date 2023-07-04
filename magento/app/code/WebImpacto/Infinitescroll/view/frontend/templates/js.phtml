@@ -49,7 +49,6 @@ require(['jquery'], function($) {
             $(configItemsSelector).trigger('contentUpdated');
             history.replaceState( {} , document.title, ajaxUrl);
             ScrollDebounce = true;
-            console.log(arrayHistory);
             toggleLoader();
 
         }).catch(function (err) {
