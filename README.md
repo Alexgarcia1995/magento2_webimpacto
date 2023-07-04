@@ -8,7 +8,7 @@ In order to install and make it work properly, you need to follow this steps:
 3. Access to "webimpacto_es-container" and run `composer install` in order to generate vendor elements.
 4. Run http://localhost:80/ and check if everything works properly in Magento.
 
-Each module is added in app/code/WebImpacto.
+Each module is added in magento/app/code/WebImpacto.
 
 For enable them, run `php bin/magento module:enable WebImpacto_Customproducttext WebImpacto_Infinitescroll WebImpacto_Successtotalmessage WebImpacto_Weather`
 
